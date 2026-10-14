@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 data/gbif/raw
 data/gbif/extracted/
+gbif_download_metadata.png
