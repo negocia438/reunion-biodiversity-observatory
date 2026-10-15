@@ -6,7 +6,7 @@ namespace = {
 }
 
 index_l = [] 
-column_names = []
+columns = []
 
 with zipfile.ZipFile("../data/gbif/raw/0021471-260928105237408.zip") as archive:
     with archive.open("meta.xml") as meta_file:
@@ -23,8 +23,8 @@ for field in fields :
         index_l.append(field.get('index'))
         term = field.get("term")
         column_name = term.rsplit("/", 1)[-1]
-        column_names.append(column_name)
+        columns.append((field.get("index"), column_name))
 
 print(len(index_l))
-print(len(column_names))
-print(column_names[0:10])
+print(len(columns))
+print(columns[0:10])
