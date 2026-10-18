@@ -5,3 +5,6 @@ __pycache__/
 data/gbif/raw
 data/gbif/extracted/
 gbif_download_metadata.png
+.venv-dbt/
+reunion_dbt/target/
+reunion_dbt/logs/
