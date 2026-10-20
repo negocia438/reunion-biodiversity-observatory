@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: gbif
+    schema: raw
+    description: "Données brutes GBIF issues du Darwin Core Archive de La Réunion."
+
+    tables:
+      - name: gbif_occurrences_full
+        description: "Occurrences GBIF brutes chargées depuis occurrence.txt."

@@ -8,3 +8,6 @@ gbif_download_metadata.png
 .venv-dbt/
 reunion_dbt/target/
 reunion_dbt/logs/
+.venv-dbt/
+.venv-agent/
+logs/
