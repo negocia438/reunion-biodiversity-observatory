@@ -26,3 +26,15 @@ response = chat.send_message(
 )
 
 print(response.function_calls)
+
+call = response.function_calls[0]
+
+available_tools = {
+    "get_observation_count": get_observation_count
+}
+
+tool = available_tools[call.name]
+
+result = tool(**call.args)
+
+print("Résultat :", result)
