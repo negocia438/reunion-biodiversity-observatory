@@ -1,10 +1,12 @@
 from google import genai
 from google.genai import types
-from tools import get_observation_count
 from dotenv import load_dotenv
 
-load_dotenv()
+from tools import get_observation_count
+from orchestrator import execute_tool_calls
 
+
+load_dotenv()
 
 client = genai.Client()
 
@@ -15,7 +17,9 @@ available_tools = {
 
 
 config = types.GenerateContentConfig(
-    tools=[get_observation_count],
+    tools=[
+        get_observation_count
+    ],
     automatic_function_calling=types.AutomaticFunctionCallingConfig(
         disable=True
     ),
@@ -42,33 +46,13 @@ if not response.function_calls:
     print("Réponse directe :", response.text)
 
 else:
-    call = response.function_calls[0]
+    function_responses = execute_tool_calls(
+        response,
+        available_tools
+    )
 
-    if call.name not in available_tools:
-        print(f"Tool interdit ou inconnu : {call.name}")
+    final_response = chat.send_message(
+        function_responses
+    )
 
-    else:
-        tool = available_tools[call.name]
-
-        try:
-            result = tool(**call.args)
-
-            print("Tool choisi :", call.name)
-            print("Arguments :", call.args)
-            print("Résultat :", result)
-
-            function_response = types.Part.from_function_response(
-                name=call.name,
-                response={
-                    "result": result
-                }
-            )
-
-            final_response = chat.send_message(
-                function_response
-            )
-
-            print("Réponse finale :", final_response.text)
-
-        except Exception as error:
-            print("Erreur pendant l'exécution du tool :", error)
+    print("Réponse finale :", final_response.text)
