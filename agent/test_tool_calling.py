@@ -2,7 +2,7 @@ from google import genai
 from google.genai import types
 from dotenv import load_dotenv
 
-from tools import get_observation_count
+from tools import get_observation_count, get_data_freshness
 from orchestrator import execute_tool_calls
 
 
@@ -12,13 +12,15 @@ client = genai.Client()
 
 
 available_tools = {
-    "get_observation_count": get_observation_count
+    "get_observation_count": get_observation_count,
+    "get_data_freshness": get_data_freshness,
 }
 
 
 config = types.GenerateContentConfig(
     tools=[
-        get_observation_count
+        get_observation_count,
+        get_data_freshness,
     ],
     automatic_function_calling=types.AutomaticFunctionCallingConfig(
         disable=True
@@ -38,7 +40,7 @@ chat = client.chats.create(
 
 
 response = chat.send_message(
-    "Combien d'observations de Phelsuma avons-nous en 2024 ?"
+    "À quand remonte la dernière mise à jour de nos données ?"
 )
 
 
