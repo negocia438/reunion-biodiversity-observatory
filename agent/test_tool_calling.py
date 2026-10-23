@@ -1,0 +1,28 @@
+from google import genai
+from google.genai import types
+from tools import get_observation_count
+
+client = genai.Client()
+
+config = types.GenerateContentConfig(
+    tools=[get_observation_count],
+    automatic_function_calling=types.AutomaticFunctionCallingConfig(
+        disable=True
+    ),
+    tool_config=types.ToolConfig(
+        function_calling_config=types.FunctionCallingConfig(
+            mode="ANY"
+        )
+    ),
+)
+
+chat = client.chats.create(
+    model="gemini-3.8-flash",
+    config=config
+)
+
+response = chat.send_message(
+    "Combien d'observations de Phelsuma avons-nous en 2024 ?"
+)
+
+print(response.function_calls)
