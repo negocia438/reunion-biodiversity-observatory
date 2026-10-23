@@ -1,3 +1,5 @@
+from operator import call
+
 from google import genai
 from google.genai import types
 from tools import get_observation_count
@@ -25,19 +27,27 @@ response = chat.send_message(
     "Combien d'observations de Phelsuma avons-nous en 2024 ?"
 )
 
-print(response.function_calls)
-
-call = response.function_calls[0]
-
 available_tools = {
     "get_observation_count": get_observation_count
 }
 
-tool = available_tools[call.name]
+if not response.function_calls:
+    print("Aucun tool demandé.")
+else:
+    call = response.function_calls[0]
 
-result = tool(**call.args)
+    if call.name not in available_tools:
+        print(f"Tool interdit ou inconnu : {call.name}")
+    else:
+        tool = available_tools[call.name]
 
-print("Résultat :", result)
+        try:
+            result = tool(**call.args)
+            print("Résultat :", result)
+
+        except Exception as error:
+            print("Erreur pendant l'exécution du tool :", error)
+
 
 function_response = types.Part.from_function_response(
     name=call.name,
