@@ -38,3 +38,17 @@ tool = available_tools[call.name]
 result = tool(**call.args)
 
 print("Résultat :", result)
+
+function_response = types.Part.from_function_response(
+    name=call.name,
+    response={
+        "result": result
+    }
+)
+
+
+final_response = chat.send_message(
+    function_response
+)
+
+print("Réponse finale :", final_response.text)
