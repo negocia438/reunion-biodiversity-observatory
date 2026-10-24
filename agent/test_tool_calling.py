@@ -40,8 +40,11 @@ chat = client.chats.create(
 
 
 response = chat.send_message(
-    "À quand remonte la dernière mise à jour de nos données ?"
+    "Combien d'observations de Phelsuma avons-nous en 2024 "
+    "et à quand remonte la dernière mise à jour des données ?"
 )
+
+print("Function calls :", response.function_calls)
 
 
 if not response.function_calls:
