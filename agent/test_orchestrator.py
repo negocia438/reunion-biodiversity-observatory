@@ -1,15 +1,21 @@
+"""Démonstration locale de l’orchestrateur avec des appels Gemini simulés.
+
+Aucune API ni base n’est appelée. Les sorties sont affichées sans assertions."""
+
 from types import SimpleNamespace
 
 from orchestrator import execute_tool_calls
 from tools import get_observation_count, get_data_freshness
 
 
+# Même registre que pour Gemini, mais utilisé sans réseau.
 available_tools = {
     "get_observation_count": get_observation_count,
     "get_data_freshness": get_data_freshness,
 }
 
 
+# SimpleNamespace reproduit seulement les attributs lus par l’orchestrateur.
 response_observation = SimpleNamespace(
     function_calls=[
         SimpleNamespace(
@@ -50,6 +56,7 @@ response_both = SimpleNamespace(
 )
 
 
+# Scénarios affichés : comptage seul, fraîcheur seule, puis les deux ensemble.
 print("TEST 1")
 print(
     execute_tool_calls(

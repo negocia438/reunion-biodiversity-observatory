@@ -1,3 +1,7 @@
+"""Crée la table RAW à partir des champs décrits dans le meta.xml de l’archive GBIF.
+
+Toutes les colonnes sont TEXT ; le schéma raw doit déjà exister."""
+
 import os
 import zipfile
 import xml.etree.ElementTree as ET
@@ -79,6 +83,7 @@ sql_columns = []
 
 for _, column_name in columns:
 
+    # Identifier protège et cite les noms, notamment les colonnes en camelCase.
     column_definition = sql.SQL("{} TEXT").format(
         sql.Identifier(column_name)
     )
@@ -90,6 +95,7 @@ for _, column_name in columns:
 # 3. Construire le CREATE TABLE
 # --------------------------------------------------
 
+# IF NOT EXISTS ne met pas à jour une table dont les colonnes ont changé.
 create_table_query = sql.SQL(
     """
     CREATE TABLE IF NOT EXISTS {}.{} (

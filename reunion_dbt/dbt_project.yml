@@ -1,3 +1,5 @@
+# Configuration dbt ; le profil jaffle_shop est défini hors du dépôt.
+# Les matérialisations ci-dessous s’appliqueront aux futurs modèles SQL.
 name: reunion_dbt
 
 profile: jaffle_shop

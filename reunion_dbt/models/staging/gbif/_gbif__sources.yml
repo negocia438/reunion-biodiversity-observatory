@@ -1,3 +1,4 @@
+# Déclare une table existante : dbt ne la crée pas et ne charge pas le ZIP.
 version: 2
 
 sources:

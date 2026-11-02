@@ -1,3 +1,4 @@
+-- Compte les coordonnées hors du rectangle retenu pour La Réunion. Les valeurs NULL ne sont pas comptées ici.
 SELECT COUNT(*) AS invalid_geographic_observations
 FROM raw.gbif_occurrences
 WHERE latitude < -21.40

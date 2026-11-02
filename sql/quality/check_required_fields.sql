@@ -1,3 +1,4 @@
+-- Compte chaque observation ayant au moins un champ obligatoire NULL ; les chaînes vides ne sont pas détectées.
 SELECT COUNT(*) AS invalid_observations
 FROM raw.gbif_occurrences
 WHERE gbif_key IS NULL

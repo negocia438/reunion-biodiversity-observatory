@@ -1,3 +1,4 @@
+-- Enregistre les métadonnées de l’archive initiale ; une seconde exécution échoue sur les contraintes uniques.
 INSERT INTO raw.source_files (
     source_name,
     gbif_id,

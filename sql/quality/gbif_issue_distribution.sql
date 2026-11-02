@@ -1,3 +1,4 @@
+-- Déplie le tableau JSONB issues et compte les occurrences de chaque avertissement GBIF.
 SELECT
     issue,
     COUNT(*) AS nb_occurrences

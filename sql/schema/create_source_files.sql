@@ -1,3 +1,4 @@
+-- Crée le registre des archives sources ; nécessite le schéma raw et une table absente.
 CREATE TABLE raw.source_files (
     source_id BIGSERIAL PRIMARY KEY,
     source_name TEXT NOT NULL,

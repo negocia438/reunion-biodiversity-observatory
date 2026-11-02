@@ -1,3 +1,7 @@
+"""Charge occurrence.txt depuis une archive GBIF vers PostgreSQL avec COPY.
+
+La table cible doit exister. Une nouvelle exécution peut créer des doublons."""
+
 import os
 import zipfile
 import csv
@@ -45,6 +49,7 @@ conn = psycopg.connect(
 # 3. Construction de la commande COPY
 # --------------------------------------------------
 
+# Sans liste explicite de colonnes, l’ordre de la table doit correspondre au TSV.
 copy_query = sql.SQL("""
     COPY {}.{}
     FROM STDIN
@@ -93,6 +98,7 @@ with zipfile.ZipFile(ZIP_PATH) as archive:
         # 5. Chargement PostgreSQL avec COPY
         # --------------------------------------------------
 
+        # Toute erreur pendant COPY annule la transaction de chargement.
         with conn:
 
             with conn.cursor() as cur:

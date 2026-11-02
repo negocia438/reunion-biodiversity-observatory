@@ -1,3 +1,7 @@
+"""Importe au plus dix occurrences de La Réunion depuis l’API GBIF.
+
+Nécessite DB_PASSWORD et une table raw.gbif_occurrences déjà créée."""
+
 import os
 import json
 
@@ -7,12 +11,14 @@ import requests
 
 url = "https://api.gbif.org/v1/occurrence/search"
 
+# RE est le code pays GBIF de La Réunion ; aucune pagination ici.
 params = {
     "country": "RE",
     "limit": 10
 }
 
 response = requests.get(url, params=params)
+# Arrêter l’import si GBIF renvoie une erreur HTTP.
 response.raise_for_status()
 
 data = response.json()
@@ -26,11 +32,13 @@ conn = psycopg.connect(
     password=password
 )
 
+# Le contexte valide la transaction en cas de succès et l’annule sur exception.
 with conn:
     with conn.cursor() as cur:
 
         for obs in data["results"]:
 
+            # Mapper les clés GBIF aux colonnes locales et sérialiser les champs JSON.
             values = {
                 "gbif_key": obs.get("key"),
                 "occurrence_id": obs.get("occurrenceID"),
@@ -58,6 +66,8 @@ with conn:
                 "raw_payload": json.dumps(obs)
             }
 
+            # Paramètres SQL séparés des valeurs ; la clé GBIF doit être unique
+            # pour que ON CONFLICT ignore les observations déjà importées.
             cur.execute(
                 """
                 INSERT INTO raw.gbif_occurrences (
