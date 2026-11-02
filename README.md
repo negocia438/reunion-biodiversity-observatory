@@ -23,6 +23,6 @@ python -m pip install google-genai pydantic python-dotenv
 python agent/test_orchestrator.py
 ```
 
-Le script affiche trois scénarios utilisant les outils simulés. Il ne contient pas d’assertions : son affichage ne constitue pas une suite de tests automatisés. Le dépôt ne fournit pas encore de manifeste Python ni de verrouillage des versions.
+Le script affiche trois scénarios utilisant les outils simulés. Il vérifie également par assertions le nettoyage des arguments, le rejet des demandes invalides et la poursuite des appels après une erreur. Le dépôt ne fournit pas encore de manifeste Python ni de verrouillage des versions.
 
 Les scripts Python sont exécutables directement et effectuent leurs opérations au niveau du module : importer un script d’ingestion ou un script Gemini peut déclencher un accès externe. Lire les prérequis avant de les lancer.

@@ -47,7 +47,7 @@ python -m pip install google-genai pydantic python-dotenv
 python agent/test_orchestrator.py
 ```
 
-Ce dernier script ne nécessite ni clé API ni PostgreSQL. Malgré leur nom, les fichiers `test_*.py` sont des démonstrations exécutées au niveau du module, sans assertions. Ne pas les importer ou lancer une collecte de tests en supposant qu’ils sont sans effets externes.
+Ce dernier script ne nécessite ni clé API ni PostgreSQL. Malgré leur nom, les fichiers `test_*.py` sont des démonstrations exécutées au niveau du module, avec des assertions de validation dans `test_orchestrator.py`. Ne pas les importer ou lancer une collecte de tests en supposant qu’ils sont sans effets externes.
 
 ## Démonstrations Gemini
 
@@ -70,7 +70,7 @@ Ce dernier conserve le résultat dans `result`, sans l’afficher. Les deux util
 1. Choisir la table ou vue métier à interroger : voir [les deux schémas d’import](donnees-postgres.md).
 2. Remplacer les résultats fixes par des requêtes paramétrées avec un rôle PostgreSQL en lecture seule.
 3. Définir la fraîcheur : date d’import, modification de la source et interprétation GBIF sont différentes.
-4. Valider les arguments : `ObservationQuery` ne s’applique actuellement qu’au parcours JSON, pas aux appels de l’orchestrateur.
+4. Valider les arguments : `ObservationQuery` valide le parcours JSON et les arguments de comptage de l’orchestrateur ; les futurs outils devront définir leur propre validation.
 5. Ajouter des tests avec assertions pour les succès, erreurs, noms inconnus et appels multiples ; gérer plusieurs tours si nécessaire.
 
 Le modèle ne doit recevoir ni mot de passe ni accès à du SQL libre. Le registre de fonctions métier permet de limiter les opérations possibles. Le dépôt ne contient pas encore de manifeste Python ni de verrouillage des dépendances.

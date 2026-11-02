@@ -1,6 +1,7 @@
 """Exécute les outils demandés par Gemini et prépare les réponses pour le modèle."""
 
 from google.genai import types
+from structured_query import ObservationQuery
 
 
 def execute_tool_calls(response, available_tools):
@@ -29,8 +30,15 @@ def execute_tool_calls(response, available_tools):
         tool = available_tools[call.name]
 
         try:
+            args = call.args
+
+            if call.name == "get_observation_count":
+                # Nettoyer et valider avant toute exécution de l’outil.
+                query = ObservationQuery.model_validate(args)
+                args = query.model_dump()
+
             # Les arguments nommés du modèle deviennent les paramètres Python.
-            result = tool(**call.args)
+            result = tool(**args)
 
             function_responses.append(
                 types.Part.from_function_response(
