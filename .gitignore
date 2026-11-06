@@ -11,3 +11,4 @@ reunion_dbt/logs/
 .venv-dbt/
 .venv-agent/
 logs/
+.venv-app/
