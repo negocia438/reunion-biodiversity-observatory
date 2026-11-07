@@ -12,3 +12,6 @@ reunion_dbt/logs/
 .venv-agent/
 logs/
 .venv-app/
+
+# Configuration locale Streamlit
+.streamlit/secrets.toml
