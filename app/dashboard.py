@@ -3,9 +3,7 @@
 import pandas as pd
 import psycopg
 import streamlit as st
-
 from analytics import annual_observations
-
 
 st.set_page_config(
     page_title="Biodiversité de La Réunion",

@@ -32,3 +32,6 @@ jobs:
 
       - name: Exécuter les tests
         run: python -m unittest discover -s tests -p "test_*.py" -v
+
+      - name : Analyse la qualité du code avec Ruff
+        run : python -m ruff check app tests 
