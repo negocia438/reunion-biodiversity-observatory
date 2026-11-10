@@ -1,0 +1,12 @@
+jaffle_shop:
+  target: ci
+  outputs:
+    ci:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: ci_user
+      password: "{{ env_var('CI_DB_PASSWORD') }}"
+      dbname: reunion_ci
+      schema: analytics_ci
+      threads: 2
